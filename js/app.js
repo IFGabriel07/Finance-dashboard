@@ -1,14 +1,38 @@
-let valorEntrada = document.getElementById("valor").value ;
-let descricao = document.getElementById("descricao").value ;
-let tipo = document.getElementById("tipo").value ;
+    
+
+let totalDinheiroEntrado = 0;
+let totalDinheiroSaido = 0;
+let saldoAtual = 0;
+
+let formulario = document.querySelector("form");
+
+formulario.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    
+    let descricao = document.getElementById("descricao").value;
+    let valor = Number(document.getElementById("valor").value);
+    let tipo = document.getElementById("tipo").value;
+    
+    
+    
+    if (tipo === "entradas") {
+        totalDinheiroEntrado = totalDinheiroEntrado + valor;
+    } else {
+        totalDinheiroSaido = totalDinheiroSaido + valor;
+    }
+    
+    saldoAtual = totalDinheiroEntrado - totalDinheiroSaido;
+    
+    document.getElementById("entradas").textContent = totalDinheiroEntrado;
+    document.getElementById("saidas").textContent = totalDinheiroSaido;
+    document.getElementById("saldo").textContent = saldoAtual;
+    
 
 
-let entSald = prompt(Number("Digite o valor de entrada: "));
-let saidSald = prompt(Number("Digite o valor de saída: "));
-
-let valorFinal = entSald - saidSald;
-
-console.log("O valor Final é : " + valorFinal);
-console.log(descricao);
-console.log(valorEntrada);
-console.log(tipo);
+    
+    console.log("Total de Entradas:", totalDinheiroEntrado);
+    console.log("Total de Saídas:", totalDinheiroSaido);
+    console.log("Saldo Atual:", saldoAtual);
+    console.log("Descrição:", descricao);
+});
