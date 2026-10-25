@@ -10,70 +10,66 @@
 </head>
 
 <body>
-<div>
+    <div>
 
         <nav>
 
-            
-                <button type="button">Dashboard</button>
-                <button type="button">Transações</button>
-                <button type="button">Relatórios</button>
-                <button type="button">investimentos</button>
-            
-            </nav>
+            <button type="button">Dashboard</button>
+            <button type="button">Transações</button>
+            <button type="button">Relatórios</button>
+            <button type="button">investimentos</button>
 
+        </nav>
 
-    <header>
+        <header>
 
-        <h1>Meu Financeiro</h1>
+            <h1>Meu Financeiro</h1>
 
-    </header>
+        </header>
 
-    <section>
+        <section>
 
-        <div>
+            <div>
 
-            <h2>Saldo Atual</h2>
-            <p id="saldo">R$ 0,00</p>
+                <h2>Saldo Atual</h2>
+                <p id="saldo">R$ 0,00</p>
 
-            <h2>Entradas</h2>
-            <p id="entradas">R$ 0,00</p>
+                <h2>Entradas</h2>
+                <p id="entradas">R$ 0,00</p>
 
-            <h2>Saídas</h2>
-            <p id="saidas">R$ 0,00</p>
+                <h2>Saídas</h2>
+                <p id="saidas">R$ 0,00</p>
 
-        </div>
+            </div>
 
-    </section>
+        </section>
 
-    <section>
+        <section>
 
-        <form>
-            <h2> Nova Transação </h2>
+            <form>
+                <h2> Nova Transação </h2>
 
-            <label for="descricao">descrição:</label>
-            <input type="text" id="descricao" name="descricao" required>
+                <label for="descricao">descrição:</label>
+                <input type="text" id="descricao" name="descricao" required>
 
-            <label for="valor">valor:</label>
-            <input type="number" step="0.01" id="valor" name="valor" required>
-
-
-
-            <label for="tipo">tipo:</label>
-            <select name="tipo" id="tipo"> 
-                <option value="entradas">Entrada</option>
-                <option value="saidas">Saída</option>
-            </select>
-
-
-            <button type="submit">Adicionar</button>
-        </form>
-
-    </section>
+                <label for="valor">valor:</label>
+                <input type="number" step="0.01" id="valor" name="valor" required>
 
 
 
-</div>
+                <label for="tipo">tipo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="entradas">Entrada</option>
+                    <option value="saidas">Saída</option>
+                </select>
+
+
+                <button type="submit">Adicionar</button>
+            </form>
+
+        </section>
+
+    </div>
 </body>
 
 </html>
