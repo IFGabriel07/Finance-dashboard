@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String        @id @default(cuid())
+  email             String        @unique
+  name              String
+  acceptedTermsAt   DateTime
+  acceptedPrivacyAt DateTime
+  createdAt         DateTime      @default(now())
+  accounts          BankAccount[]
+  entries           LedgerEntry[]
+}
+
+model BankAccount {
+  id           String        @id @default(cuid())
+  userId       String
+  bankName     String
+  accentColor  String
+  balanceCents Int           @default(0)
+  createdAt    DateTime      @default(now())
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entries      LedgerEntry[]
+
+  @@index([userId])
+}
+
+model LedgerEntry {
+  id                            String      @id @default(cuid())
+  userId                        String
+  accountId                     String
+  type                          String
+  amountCents                   Int
+  signedDeltaCents              Int
+  description                   String
+  category                      String
+  occurredAt                    DateTime    @default(now())
+  transferGroupId               String?
+  accountBalanceAfterCents      Int
+  consolidatedBalanceAfterCents Int
+  user                          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account                       BankAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([userId, occurredAt])
+  @@index([accountId])
+}
