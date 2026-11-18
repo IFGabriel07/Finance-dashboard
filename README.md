@@ -1,34 +1,43 @@
-# Finance Dashboard — Multi-Bank Ledger & Variance Audit
+# Finance Dashboard
 
-A personal financial observability system designed to consolidate balances across multiple banking institutions (e.g., Banco Inter, Nubank) into a single real-time ledger while providing an **"Investigate" root-cause audit engine** to trace every balance fluctuation back to the exact institution and transaction.
+Personal finance app to track balances across multiple bank accounts, categorize expenses, and see how each transaction affects your overall balance.
 
-## Core Architecture & Engineering Decisions
+## What it does
 
-- **Integer-Cents Accounting (`src/domain/ledger.ts`):** All monetary values and deltas are stored and computed strictly as integer cents to prevent IEEE-754 floating-point precision drift.
-- **Event-Driven Ledger Trail (`prisma/schema.prisma`):** Every inflow (`CREDIT`), outflow (`DEBIT`), and internal transfer (`TRANSFER_IN` / `TRANSFER_OUT`) records atomic snapshots of both the individual institution balance and the global consolidated balance.
-- **Variance Investigation Engine (`GET /api/investigate`):** Isolates net balance changes over any time window, ranks institutions by signed impact (`primaryDriverBank`), and sorts transactions by absolute financial impact.
-- **Privacy & Compliance by Design (LGPD / WCAG AA):** Enforces `userId` tenant isolation on all database queries, explicit consent timestamps, Art. 18 JSON data export (`GET /api/lgpd/export`), full account erasure (`DELETE /api/lgpd/account`), and zero third-party tracking scripts.
+- **Multi-bank overview:** Tracks individual bank balances alongside your combined total (`Saldo Geral`) using integer-cents math to avoid floating-point rounding bugs.
+- **Transactions & transfers:** Log income, expenses (with preset or custom categories), and internal transfers between banks without changing the total balance.
+- **Balance impact analysis:** Filter movements by period, bank, or category to see which account and spending category weighed most on your balance.
+- **LGPD compliance:** Explicit consent checkboxes with Terms and Privacy modals, full JSON data export, and permanent account deletion.
 
-## Tech Stack
+## Stack
 
-- **Domain & Backend:** TypeScript, Node.js, Fastify, Prisma ORM (SQLite), Zod
-- **Frontend:** React, Vite, Tailwind CSS, Lucide Icons *(Phase 3)*
-- **Testing & Tooling:** Vitest, strict TypeScript (`tsc --noEmit`)
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Lucide Icons
+- **Backend:** Node.js, Fastify, Prisma (SQLite), Zod
+- **Tests:** Vitest
 
-## Getting Started
+## Project structure
+
+```text
+  prisma/          # SQLite schema and migrations
+  src/
+  domain/        # Core ledger rules (integer cents) and unit tests
+  server/        # Fastify API routes, Zod schemas, and integration tests
+  client/        # React components, types, and BRL currency formatters
+```
+
+## Running locally
 
 ```bash
-# Install dependencies
 npm install
-
-# Apply database migrations
 npx prisma migrate dev
 
-# Run static type checking
+# Run tests and typecheck
+npm test
 npm run typecheck
 
-# Run automated unit and API integration tests
-npm test
-
-# Start the REST API server on http://localhost:3333
+# Terminal 1 — API (http://localhost:3333)
 npm run dev:api
+
+# Terminal 2 — Frontend (http://localhost:5173)
+npm run dev:web
+```
